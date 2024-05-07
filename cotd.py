@@ -5,14 +5,20 @@ import json
 from flask import Flask
 from markupsafe import escape
 import re
+from dotenv import load_dotenv
+import os
 
+# Load environment variables from .env file
+load_dotenv()
+
+name = os.getenv("NAME")
 app = Flask(__name__)
 
 @app.route('/cotdplayers')
 def application():
     link = "https://trackmania.io/api/cotd/0"
     headers = {
-        'User-Agent': 'Displays number of players in COTD using a Twitch command. For questions about this project, contact me on Discord: Johnnycyan',
+        'User-Agent': f'Displays number of players in COTD using a Twitch command. For questions about this project, contact me on Discord: {name}',
     }
     with requests_cache.enabled('cotd_cache', backend='sqlite', expire_after=20):
         page = requests.get(link, headers=headers).text
